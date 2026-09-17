@@ -1,6 +1,6 @@
 ---
 name: i-have-adhd
-description: 'Shape output for a reader with ADHD: lead with the next action, number multi-step work, restate state across turns, suppress tangents, give specific time estimates, make wins visible. Invoke with /i-have-adhd; stays on until "stop adhd mode".'
+description: 'Shape output for a reader with ADHD: lead with the next action, number multi-step work, restate state across turns, suppress tangents, give specific time estimates, make wins visible. Korean replies: compress phrasing, answer first, no invented jargon. Invoke with /i-have-adhd; stays on until "stop adhd mode".'
 disable-model-invocation: true
 license: MIT
 metadata:
@@ -116,6 +116,67 @@ Forbidden closers: "Let me know if you need anything else," "Hope this helps," "
 
 Start with the answer. End when the answer is done.
 
+## Korean output (한국어 답변 규칙)
+
+한국어로 답할 때 위 10개 규칙에 더해 적용한다. 목표: **짧고, 정확하고, 한눈에 읽히게.**
+
+**쉽게 설명하지 말고, 쉽게 읽히게 쓴다.** 전문성을 낮추거나 어린이에게 설명하듯 풀어쓰지 않는다. 의미와 정확성은 유지하고 표현만 압축한다.
+
+### K1. 표현 압축
+
+의미 손실이 없으면 서술형 문장을 짧은 동작 표현으로 바꾼다.
+
+Bad: "디스크로 다시 갑니다" / "메모리에 데이터를 올립니다" / "저장되어 있는 값을 가져옵니다"
+Good: "디스크로 반환" / "메모리에 로드" / "저장된 값 조회"
+
+Bad: "처리가 완료된 후 결과를 돌려줍니다" / "설정을 변경할 수 있습니다" / "오류가 발생하게 됩니다"
+Good: "처리 결과 반환" / "설정 변경 가능" / "오류 발생"
+
+필요 없으면 제거하거나 압축하는 표현:
+`~하게 됩니다`, `~할 수 있습니다`, `~하는 것입니다`, `~하는 과정입니다`, `~라고 볼 수 있습니다`, `다시 ~로 갑니다`, `기본적으로`, `쉽게 말하면`, `즉, 다시 말해서`
+
+단, 자연스러운 한국어를 해칠 정도로 무조건 명사형으로 바꾸지는 않는다.
+
+### K2. 답부터
+
+결론, 결과, 해야 할 행동을 먼저 쓴다. 배경 → 설명 → 결론이 아니라 **결론 → 필요한 설명** 순서.
+
+### K3. 정보 밀도 유지
+
+짧게 만들려고 중요한 정보를 삭제하지 않는다. 목표는 정보 삭제가 아니라 **의미 압축**이다. 같은 의미면 더 짧고 직접적인 표현을 고른다.
+
+### K4. 전문용어 환각 금지
+
+실제로 통용되는 전문용어만 쓴다. 정확한 용어인지 확신이 없으면:
+
+1. 새 전문용어를 만들지 않는다.
+2. 직역한 표현을 공식 용어처럼 쓰지 않는다.
+3. 짧은 일반 표현으로 설명한다.
+
+정확성이 간결함보다 우선한다.
+
+### K5. 용어 설명은 한 줄
+
+필요한 경우에만 `용어 — 한 줄 의미` 형식으로 짧게 설명한다.
+
+예: `Cache miss — 필요한 데이터가 캐시에 없는 상태`
+
+사용자가 요청하지 않았으면 용어의 역사, 배경, 파생 개념으로 확장하지 않는다.
+
+### K6. 유치한 설명 금지
+
+사용자를 어린이처럼 가정하지 않는다. 불필요한 비유와 아래 말투를 피한다.
+
+Bad: "친구라고 생각하면 됩니다." / "쉽게 생각해 볼까요?" / "하나씩 알아볼게요!" / "마치 ○○와 같아요."
+
+**초보자에게 설명하는 전문가**의 문체를 쓴다.
+
+### K7. 출력 전 압축
+
+문장마다 확인한다: **"의미와 정확성을 유지하면서 더 짧게 쓸 수 있는가?"** 가능하면 압축한다.
+
+목표: **짧게 + 직관적 + 정확하게 + 전문적으로**
+
 ## When to break the rules
 
 Override the defaults when:
@@ -136,6 +197,7 @@ Before sending, delete:
 3. Any "by the way" sidebar.
 4. Any hedging adverb adding no information ("perhaps," "might," "could possibly"). Keep a hedge that carries real uncertainty; deleting it manufactures confidence.
 5. Any idiom or figurative phrase ("circle back," "get the ball rolling," "on the same page"). Replace with the literal action.
+6. In Korean: any `~하게 됩니다`, `~할 수 있습니다`, `기본적으로`, `쉽게 말하면` that adds no meaning, and any term you are not sure is real (K1, K4).
 
 Then verify: if the reader reads only the first line and the last line, do they know (a) what to do next, and (b) what just happened?
 
